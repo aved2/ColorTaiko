@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Generator</title>
+    <style>
+        /* #lineContainer {
+            min-height: 100px;
+            border: 1px solid black;
+            cursor: pointer;
+        } */
+        body,html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        .line {
+            height: 4px;
+            width: 50%;
+            margin: 0 auto;
+            margin: 10px auto;
+            /* experimenting with line stylings */
+            /* border-top-style: dotted; */
+            /* border-top-style: solid; */
+            /* border-top-style: dashed; */
+            border-top-style: outset;
+        }
+        .purple {
+            background-color: purple;
+        }
+        .lightblue {
+            background-color: lightblue;
+        }
+        .green {
+            background-color: rgba(89, 184, 89, 0.691);
+        }
+        .red {
+            background-color: rgba(222, 72, 52, 0.969);
+        }
+        .orange {
+            background-color: rgba(216, 117, 12, 0.969);
+        }
+        .pink {
+            background-color: pink;
+        }
+        .lateblue {
+            background-color: mediumslateblue;
+        }
+        .seagreen {
+            background-color: mediumseagreen;
+        }
+        .lavender {
+            background-color: rgb(183, 183, 244);
+        }
+        .rosebrown {
+            background-color: rosybrown;
+        }
+        .olive {
+            background-color: olivedrab;
+        }
+        .crimsonred {
+            background-color: crimson;
+        }
+        .yellow {
+            background-color: rgb(213, 213, 55);
+        }
+        .violetred {
+            background-color: palevioletred;
+        }
+        .indigo {
+            background-color: indigo;
+        }
+        .coral {
+            background-color: coral;
+        }
+        .teal {
+            background-color: teal;
+        }
+        .plum {
+            background-color: plum;
+        }
+        .navy {
+            background-color: navy;
+        }
+        .yellowgreen {
+            background-color: yellowgreen;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <script>
+        let colors = ['purple', 'lightblue', 'green', 'red', 'orange', 'pink', 'lateblue', 'seagreen', 'lavender', 'rosebrown',
+                        'olive', 'crimsonred', 'yellow', 'violetred', 'indigo', 'coral', 'teal', 'plum', 'navy', 'yellowgreen'];
+        let currentIndex = 0;
+
+        function addLine() {
+            let line = document.createElement('div');
+            line.classList.add('line', colors[currentIndex]);
+            document.body.appendChild(line);
+            currentIndex = (currentIndex + 1) % colors.length;
+        }
+        document.body.addEventListener('click', addLine)
+    </script>
+</body>
+</html>
