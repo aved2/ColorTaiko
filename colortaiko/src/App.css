@@ -132,6 +132,24 @@ input[type=number] {
   color: #555;
 }
 
+
+
+.dot {
+  cursor: pointer; /* Indicates the dots are clickable */
+  transition: transform 0.3s ease; /* Smooth transition for scaling on hover */
+}
+
+.container svg line {
+  stroke: #000;
+  /* position:absolute; */
+  stroke-width: 2; /* Line thickness */
+}
+
+
+.container svg {
+  z-index: -1; /* Ensures SVG doesn't interfere with clicking on dots */
+}
+
 .dark-mode .dot {
   background-color: rgb(227, 213, 194);
   box-shadow: 2px 2px #555;
