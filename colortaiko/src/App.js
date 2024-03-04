@@ -36,17 +36,19 @@ const App = () => {
 
 
 
- const getDotPosition = (dotRef) => {
-   if (!svgRef.current || !dotRef.current) {
-     return { x: 0, y: 0 };
-   }
-    const svgRect = svgRef.current.getBoundingClientRect();
-   const dotRect = dotRef.current.getBoundingClientRect();
-   return {
-     x: dotRect.left + dotRect.width / 2 - svgRect.left, 
-     y: dotRect.top + dotRect.height / 2 - svgRect.top 
-   };
- };
+ const getDotPosition = (index) => {
+  const dotRef = dotRefs.current[index];
+  if (!svgRef.current || !dotRef) {
+    return { x: 0, y: 0 };
+  }
+  const svgRect = svgRef.current.getBoundingClientRect();
+  const dotRect = dotRef.getBoundingClientRect();
+  return {
+    x: dotRect.left + dotRect.width / 2 - svgRect.left,
+    y: dotRect.top + dotRect.height / 2 - svgRect.top,
+  };
+};
+
 
 
 
@@ -125,17 +127,12 @@ const App = () => {
 
 
  const handleDotClick = (index) => {
-   const dot = dotRefs.current[index];
-   if (!dot) return; // Check if the dot is defined
-    const rect = dot.getBoundingClientRect();
-   const svgRect = svgRef.current.getBoundingClientRect();
-   const position = { x: rect.left + rect.width / 2 - svgRect.left, y: rect.top + rect.height / 2 - svgRect.top };
-    if (lines.length && !lines[lines.length - 1].end) {
-     setLines(lines => [...lines.slice(0, -1), { ...lines[lines.length - 1], end: position }]);
-   } else {
-     setLines(lines => [...lines, { start: position, end: null }]);
-   }
- };
+  if (lines.length && lines[lines.length - 1].end === null) {
+    setLines(lines => [...lines.slice(0, -1), { ...lines[lines.length - 1], end: index }]);
+  } else {
+    setLines(lines => [...lines, { start: index, end: null }]);
+  }
+};
 
 
  const renderDots = (count, offset) => {
@@ -207,10 +204,26 @@ const App = () => {
          {renderDots(bottomVertices, topVertices)}
        </div>
        <svg ref={svgRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
-         {lines.map((line, index) => line.end && (
-           <line key={index} x1={line.start.x} y1={line.start.y} x2={line.end.x} y2={line.end.y} stroke="black" strokeWidth="2" />
-         ))}
-       </svg>
+          {lines.map((line, index) => {
+            if (line.end !== null) {
+              const startPos = getDotPosition(line.start);
+              const endPos = getDotPosition(line.end);
+              return (
+                <line
+                  key={index}
+                  x1={startPos.x}
+                  y1={startPos.y}
+                  x2={endPos.x}
+                  y2={endPos.y}
+                  stroke={line.color || "black"}
+                  strokeWidth="2"
+                />
+              );
+            }
+            return null;
+          })}
+        </svg>
+
      </div>
      <button id = 'undoButton' onClick={undoLastLine}>Undo Last Line</button>
      <button id="modeSwitch" onClick={toggleDarkMode}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
