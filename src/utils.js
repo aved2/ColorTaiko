@@ -34,13 +34,3 @@ export function generateRandomColor() {
   
   return color;
 }
-
-// var colorsArray = [];
-
-// // generate 50 colors and store in array
-// for (var i = 0; i < 50; i++) {
-//   var color = generateRandomColor();
-//   colorsArray.push(color);
-// }
-
-// console.log(colorsArray);

@@ -119,16 +119,16 @@ input[type=number] {
 /* Dark mode styles */
 .dark-mode {
   background-color: #1f1f1f;
-  color: #fff;
+  color: rgb(227, 213, 194);
 }
 
 .dark-mode .title {
-  color: #fff;
+  color: rgb(227, 213, 194);
 }
 
 .dark-mode label {
   background-color: rgb(227, 213, 194);
-  color: #fff;
+  color: #555;
 }
 
 .dark-mode #addOne,
@@ -140,8 +140,6 @@ input[type=number] {
 .react-flow__viewport {
   /* transform: translate(0, 0) !important; */
 }
-
-
 
 .dot {
   cursor: pointer; /* Indicates the dots are clickable */
@@ -157,10 +155,11 @@ input[type=number] {
 
 #undoButton {
   position: absolute;
-  font-size: 1.2em;
+  font-size: 1em;
   border: 2px solid #000;
   border-radius: 5px;
   background-color: rgb(212, 194, 170);
+  font-family: 'DotGothic16', sans-serif;
   cursor: pointer;
   z-index: 15; 
   right: 150px;
@@ -186,7 +185,7 @@ input[type=number] {
   font-size: 1em;
   border: 2px solid #000;
   border-radius: 5px;
-  background-color: rgb(227, 214, 198);
+  background-color: rgb(212, 194, 170);
   font-family: 'DotGothic16', sans-serif;
   cursor: pointer;
   z-index: 10;
@@ -208,4 +207,40 @@ input[type=number] {
   display: flex;
   justify-content: space-between;
   align-items: end;
+}
+
+/* Modal styles */
+.modal {
+  display: block; /* Ensure the modal is visible */
+  font-family: 'DotGothic16', sans-serif;
+  position: fixed;
+  z-index: 9999; /* Ensure the modal appears on top of other elements */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto; /* Center the modal vertically and horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Adjust width as needed */
+  max-width: 400px; /* Limit maximum width of the modal */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

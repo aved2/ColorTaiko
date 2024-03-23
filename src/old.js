@@ -32,7 +32,8 @@ const App = () => {
 
  const [currentLine, setCurrentLine] = useState(null);
  const [colorIndex, setColorIndex] = useState(0);
-
+ // equivalence class condition, drawing two consecutive lines the same color
+ const [lastLineColor, setLastLineColor] = useState(null);
 
 
 
@@ -97,15 +98,19 @@ const App = () => {
  };
 
 
+ // updated
  const createLine = (event) => {
-   if (!drawing) return;
-   const rect = svgRef.current.getBoundingClientRect();
-   setCurrentLine(prevLine => ({
-     ...prevLine,
-     x2: event.clientX - rect.left,
-     y2: event.clientY - rect.top
-   }));
- };
+  if (!drawing) return;
+  const rect = svgRef.current.getBoundingClientRect();
+  const newLineColor = lastLineColor || generateRandomColor(); // Use last line color if available, otherwise generate a new random color
+  setCurrentLine(prevLine => ({
+    ...prevLine,
+    x2: event.clientX - rect.left,
+    y2: event.clientY - rect.top,
+    color: newLineColor // Set the color for the current line
+  }));
+  setLastLineColor(newLineColor); // Update the last line color state
+};
 
 
  const endLine = () => {
@@ -120,8 +125,6 @@ const App = () => {
  useEffect(() => {
    dotRefs.current = dotRefs.current.slice(0, topVertices + bottomVertices);
  }, [topVertices, bottomVertices]);
-
-
 
 
 
