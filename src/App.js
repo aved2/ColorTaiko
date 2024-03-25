@@ -5,9 +5,10 @@ import ErrorModal from './ErrorModal';
 import { invertColor, generateRandomColor } from './utils';
 import 'reactflow/dist/style.css';
 import './App.css';
+import { toast } from 'react-toastify';
 
 
-const lineWidths = [1, 2, 3, 4, 5, 6];
+const lineWidths = [1, 2, 3, 4, 5, 6,8,10];
 
 
 const initItemStyle = {
@@ -274,7 +275,7 @@ export default function App() {
     let sh = sourceHandle;
     let th = targetHandle;
     // Check if an edge already exists between the source and target nodes
-    const isEdgeExists = edges.some(edge => (edge.source === source && edge.target === target));
+    const isEdgeExists = edges.some(edge => (  (edge.source === source && edge.target === target) ||  (edge.source === target && edge.target === source)  ));
 
     if (isEdgeExists) {
       setErrorMessage('An edge already exists between these nodes. Draw another edge.');
@@ -282,13 +283,16 @@ export default function App() {
     }
 
     if (shNode.position.y === thNode.position.y) {
-      if (shNode.position.x < thNode.position.x) {
-        sh = 'b';
-        th = 'd';
-      } else {
-        sh = 'd';
-        th = 'b';
-      }
+      toast.warning("You can't draw horizontal lines", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return
     } else {
       if (shNode.position.y < thNode.position.y) {
         sh = 'c';
@@ -302,14 +306,15 @@ export default function App() {
     let colorPairToUse;
 
     // Use the previous color pair if available, otherwise use the new random color pair
-    if (!previousColorRef.current) {
+    if (!previousColorRef.current ) {
       colorPairToUse = randomColorPair;
       previousColorRef.current = randomColorPair;
     } else {
       colorPairToUse = previousColorRef.current;
-      previousColorRef.current = null; // Reset to null after using the previous color pair
+      if (!isEdgeExists) {
+        previousColorRef.current = null; // Reset to null after using the previous color pair
+      }
     }
-
     return setEdges((eds) =>
       addEdge(
         {
@@ -338,7 +343,7 @@ export default function App() {
       )
     );
   },
-  [setEdges, lineWidth, lineStyle, nodes, lineStyles]
+  [setEdges, lineWidth, lineStyle, nodes, lineStyles, edges]
 );
 
 
