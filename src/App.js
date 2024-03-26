@@ -293,6 +293,8 @@ export default function App() {
         progress: undefined,
       });
       return
+
+      
     } else {
       if (shNode.position.y < thNode.position.y) {
         sh = 'c';
