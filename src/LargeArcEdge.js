@@ -1,50 +1,43 @@
 import React from 'react';
 import { getBezierPath, getMarkerEnd } from 'react-flow-renderer';
 
-
-
-
-
 const LargeArcEdge = ({
-    id,
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-    style = {},
-    arrowHeadType,
-    markerEndId,
-  }) => {
-    // Implement the custom large arc drawing logic here, setting the color based on data.color
-    const edgePath = getBezierPath({ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition });
-    const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-  
-    // Use the color specified in the data object, or default to black if not specified
-    const edgeStyle = {
-      ...style,
-    };
-    
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  arrowHeadType,
+  markerEndId,
+}) => {
+  // Calculate control point for the curved edge
+  const curveFactor = 4; // Adjust this value for curvature
+  const controlPointX = sourceX + (targetX - sourceX) / curveFactor;
+  const controlPointY = sourceY; // Keep the y-coordinate same for both points
 
+  // Create custom curve path
+  const edgePath = `M${sourceX},${sourceY} C${controlPointX},${controlPointY} ${controlPointX},${controlPointY} ${targetX},${targetY}`;
 
+  // Get marker end
+  const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
 
-
-    return (
-      <path
-        style={edgeStyle}
-        className="react-flow__edge-path"
-        d={edgePath}
-        markerEnd={markerEnd}
-      />
-    );
+  // Edge style
+  const edgeStyle = {
+    ...style,
+    fill: 'none', // Ensure no fill
   };
 
-  
+  return (
+    <path
+      style={edgeStyle}
+      className="react-flow__edge-path"
+      d={edgePath}
+      markerEnd={markerEnd}
+    />
+  );
+};
+
 export default LargeArcEdge;
-
-
-
-
-
-

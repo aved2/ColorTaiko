@@ -58,8 +58,8 @@ export default function App() {
  const idBottom = useRef(100)
  // const [rfInstance, setRfInstance] = useState(null);
  const [darkMode, setDarkMode] = useState(false);
- const [topVertices, setTopVertices] = useState(3);
- const [bottomVertices, setBottomVertices] = useState(3);
+ const [topVertices, setTopVertices] = useState(5);
+ const [bottomVertices, setBottomVertices] = useState(5);
  const [nodes, setNodes, onNodesChange] = useNodesState([]);
  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
  const [lineColor, setLineColor] = useState('#666');
@@ -333,7 +333,8 @@ export default function App() {
     }
     
     round.current +=1;
-    console.log(count);
+    // console.log(count);
+    console.log(round.current);
     console.log(colorPairToUse);
     let newCurvedEdgeA;
     let newCurvedEdgeB;
@@ -382,7 +383,7 @@ export default function App() {
         ...P,
         source: currNodeB.current,
         target: prevNodeB,
-        type: 'largeArc', 
+        type: 'largeArc',
         // animated: true,
         style: {
           stroke: colorPairToUse[0], 
@@ -584,6 +585,8 @@ const closeModal = () => {
        <ReactFlow
          nodes={nodes}
          edges={edges}
+         edgeTypes={edgeTypes}
+         connectionLineType={ConnectionLineType.Straight}
          // onInit={setRfInstance}
          onNodesChange={onNodesChange}
          onEdgesChange={onEdgesChange}
@@ -594,7 +597,6 @@ const closeModal = () => {
          }}
          autoPanOnConnect={false} // cannot move after connecting
          panOnDrag={false}
-         edgeTypes={edgeTypes}
          nodesDraggable={false}
          nodesFocusable={false}
          zoomOnScroll={false}
@@ -602,7 +604,6 @@ const closeModal = () => {
          zoomOnDoubleClick={false}
          connectionMode={ConnectionMode.Loose}
          nodeTypes={nodeTypes}
-         connectionLineType={ConnectionLineType.Straight}
          onEdgeClick={(e, node) => {
            // change the lines you selected here
            console.log(e, node)
@@ -623,4 +624,3 @@ const closeModal = () => {
    </div>
  );
 }
-
