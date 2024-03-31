@@ -6,7 +6,7 @@ import { invertColor, generateRandomColor } from './utils';
 import 'reactflow/dist/style.css';
 import './App.css';
 import { toast } from 'react-toastify';
-
+import  LargeArcEdge from './LargeArcEdge';
 
 const lineWidths = [1, 2, 3, 4, 5, 6,8,10];
 
@@ -26,6 +26,14 @@ const initWarpStyle = {
 const nodeTypes = {
  custom: CustomNode,
 };
+
+const edgeTypes = {
+  largeArc: LargeArcEdge,
+};
+
+
+
+
 
 
 const nodeDefault = {
@@ -58,6 +66,11 @@ export default function App() {
  const [lineWidth, setLineWidth] = useState(4);
  const [lineStyle, setLineStyle] = useState('default');
  const [errorMessage, setErrorMessage] = useState(null);
+ const currNodeA = useRef(null);
+ const currNodeB = useRef(null);
+ const round = useRef(0);
+
+
 
 
  const lineStyles = useCallback(() => {
@@ -269,7 +282,7 @@ export default function App() {
         thNode = item;
       }
     });
-
+    
     const style = lineStyles().find((item) => item.key === lineStyle);
     const { source, sourceHandle, target, targetHandle, ...P } = params;
     let sh = sourceHandle;
@@ -293,8 +306,6 @@ export default function App() {
         progress: undefined,
       });
       return
-
-      
     } else {
       if (shNode.position.y < thNode.position.y) {
         sh = 'c';
@@ -303,23 +314,133 @@ export default function App() {
         sh = 'a';
         th = 'c';
       }
+      
     }
-
+    
     let colorPairToUse;
+
 
     // Use the previous color pair if available, otherwise use the new random color pair
     if (!previousColorRef.current ) {
       colorPairToUse = randomColorPair;
       previousColorRef.current = randomColorPair;
+
     } else {
       colorPairToUse = previousColorRef.current;
       if (!isEdgeExists) {
         previousColorRef.current = null; // Reset to null after using the previous color pair
       }
     }
+    
+    round.current +=1;
+    console.log(count);
+    console.log(colorPairToUse);
+    let newCurvedEdgeA;
+    let newCurvedEdgeB;
+    // see if any demand to generate horizontal lines
+    let prevNodeA;
+    let prevNodeB;
+    
+
+    
+    if (!currNodeA.current && !currNodeB.current) {
+      currNodeA.current =  String(Math.max(Number(source), Number(target)));
+      currNodeB.current =  String(Math.min(Number(source), Number(target)));
+    } else {
+      prevNodeA = currNodeA.current;
+      prevNodeB = currNodeB.current;
+      currNodeA.current =  String(Math.max(Number(source), Number(target)));
+      currNodeB.current =  String(Math.min(Number(source), Number(target)));
+    }
+    
+    if (round.current % 2 === 0) {    // even round, check if demand to draw horizontal lines
+      newCurvedEdgeA = {
+        ...P,
+        source: currNodeA.current,
+        target: prevNodeA,
+        type: 'largeArc', 
+        // animated: true,
+        style: {
+          stroke: colorPairToUse[0], 
+          strokeWidth: lineWidth,
+          ...initWarpStyle,
+          ...style.wrapStyle, 
+        },
+        
+          ...initItemStyle,
+          ...style.itemStyle,
+          markerEnd: style?.itemStyle?.markerEnd
+            ? { ...style?.itemStyle?.markerEnd, color: colorPairToUse[0] }
+            : undefined,
+          markerStart: style?.itemStyle?.markerStart
+            ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[0] }
+            : undefined,
+      };  
+
+
+      newCurvedEdgeB = {
+        ...P,
+        source: currNodeB.current,
+        target: prevNodeB,
+        type: 'largeArc', 
+        // animated: true,
+        style: {
+          stroke: colorPairToUse[0], 
+          strokeWidth: lineWidth,
+          ...initWarpStyle,
+          ...style.wrapStyle, 
+        },
+        
+          ...initItemStyle,
+          ...style.itemStyle,
+          markerEnd: style?.itemStyle?.markerEnd
+            ? { ...style?.itemStyle?.markerEnd, color: colorPairToUse[0] }
+            : undefined,
+          markerStart: style?.itemStyle?.markerStart
+            ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[0] }
+            : undefined,
+      };  
+    } else {
+      newCurvedEdgeA = null;
+      newCurvedEdgeB = null;
+    }
+
+  
+
+
+
+
+    
+
     return setEdges((eds) =>
-      addEdge(
-        {
+      // addEdge(
+      //   {
+      //     ...P,
+      //     source,
+      //     target,
+      //     sourceHandle: sh,
+      //     targetHandle: th,
+      //     type: ConnectionLineType.Straight,
+      //     style: {
+      //       stroke: colorPairToUse[0], // Use the first color in the pair for the current edge
+      //       strokeWidth: lineWidth,
+      //       ...initWarpStyle,
+      //       ...style.wrapStyle,
+      //     },
+      //     ...initItemStyle,
+      //     ...style.itemStyle,
+      //     markerEnd: style?.itemStyle?.markerEnd
+      //       ? { ...style?.itemStyle?.markerEnd, color: colorPairToUse[1] } // Use the second color in the pair for markers
+      //       : undefined,
+      //     markerStart: style?.itemStyle?.markerStart
+      //       ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[1] } // Use the second color in the pair for markers
+      //       : undefined,
+      //   },
+      //   eds
+      // )
+      {
+
+        const newEdge = {
           ...P,
           source,
           target,
@@ -335,15 +456,17 @@ export default function App() {
           ...initItemStyle,
           ...style.itemStyle,
           markerEnd: style?.itemStyle?.markerEnd
-            ? { ...style?.itemStyle?.markerEnd, color: colorPairToUse[1] } // Use the second color in the pair for markers
+            ? { ...style?.itemStyle?.markerEnd, color: colorPairToUse[1] }
             : undefined,
           markerStart: style?.itemStyle?.markerStart
-            ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[1] } // Use the second color in the pair for markers
+            ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[1] }
             : undefined,
-        },
-        eds
-      )
-    );
+        };
+        console.log(newEdge);
+      
+        return [...eds, newEdge, ...(newCurvedEdgeA ? [newCurvedEdgeA, newCurvedEdgeB] : [])];
+
+      });
   },
   [setEdges, lineWidth, lineStyle, nodes, lineStyles, edges]
 );
@@ -471,6 +594,7 @@ const closeModal = () => {
          }}
          autoPanOnConnect={false} // cannot move after connecting
          panOnDrag={false}
+         edgeTypes={edgeTypes}
          nodesDraggable={false}
          nodesFocusable={false}
          zoomOnScroll={false}
