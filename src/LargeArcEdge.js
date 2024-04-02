@@ -1,6 +1,8 @@
 import React from 'react';
 import { getBezierPath, getMarkerEnd } from 'react-flow-renderer';
 
+// useful source: https://reactflow.dev/examples/edges/custom-edges
+
 const LargeArcEdge = ({
   id,
   sourceX,
