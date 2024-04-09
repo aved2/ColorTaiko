@@ -82,55 +82,55 @@ export default function App() {
        itemStyle: initItemStyle, // add to edges
        wrapStyle: initWarpStyle // add to linestyles
      },
-     {
-       key: 'dashed',
-       name: 'Dasthed',
-       lineComponent: undefined,
-       itemStyle: {},
-       wrapStyle: {
-         strokeDasharray: '5, 5'
-       }
-     },
-     {
-       key: 'dotDash',
-       name: 'DotDash',
-       lineComponent: undefined,
-       itemStyle: {},
-       wrapStyle: {
-         strokeDasharray: '1, 5'
-       }
-     },
-     {
-       key: 'shortDash',
-       name: 'ShortDash',
-       lineComponent: undefined,
-       itemStyle: {},
-       wrapStyle: {
-         strokeDasharray: '5, 5, 1, 5'
-       }
-     },
-     {
-       key: 'moveDash',
-       name: 'MoveDash',
-       lineComponent: undefined,
-       itemStyle: {
-         animated: true
-       },
-       wrapStyle: {}
-     },
-     {
-       key: 'endArrow',
-       name: 'EndArrow',
-       lineComponent: undefined,
-       itemStyle: {
-         markerEnd: {
-           type: MarkerType.Arrow,
-           // color: lineColor,
-         },
-         animated: false
-       },
-       wrapStyle: {}
-     },
+    //  {
+    //    key: 'dashed',
+    //    name: 'Dasthed',
+    //    lineComponent: undefined,
+    //    itemStyle: {},
+    //    wrapStyle: {
+    //      strokeDasharray: '5, 5'
+    //    }
+    //  },
+    //  {
+    //    key: 'dotDash',
+    //    name: 'DotDash',
+    //    lineComponent: undefined,
+    //    itemStyle: {},
+    //    wrapStyle: {
+    //      strokeDasharray: '1, 5'
+    //    }
+    //  },
+    //  {
+    //    key: 'shortDash',
+    //    name: 'ShortDash',
+    //    lineComponent: undefined,
+    //    itemStyle: {},
+    //    wrapStyle: {
+    //      strokeDasharray: '5, 5, 1, 5'
+    //    }
+    //  },
+    //  {
+    //    key: 'moveDash',
+    //    name: 'MoveDash',
+    //    lineComponent: undefined,
+    //    itemStyle: {
+    //      animated: true
+    //    },
+    //    wrapStyle: {}
+    //  },
+    //  {
+    //    key: 'endArrow',
+    //    name: 'EndArrow',
+    //    lineComponent: undefined,
+    //    itemStyle: {
+    //      markerEnd: {
+    //        type: MarkerType.Arrow,
+    //        // color: lineColor,
+    //      },
+    //      animated: false
+    //    },
+    //    wrapStyle: {}
+    //  },
      {
        key: 'endArrowClosed',
        name: 'EndArrowClosed',
@@ -143,41 +143,41 @@ export default function App() {
          animated: false
        },
        wrapStyle: {}
-     },
-     {
-       key: 'bothArrow',
-       name: 'BothArrow',
-       lineComponent: undefined,
-       itemStyle: {
-         markerEnd: {
-           type: MarkerType.Arrow,
-           // color: lineColor,
-         },
-         markerStart: {
-           type: MarkerType.Arrow,
-           // color: lineColor,
-         },
-         animated: false
-       },
-       wrapStyle: {}
-     },
-     {
-       key: 'bothArrowClosed',
-       name: 'BothArrowClosed',
-       lineComponent: undefined,
-       itemStyle: {
-         markerEnd: {
-           type: MarkerType.ArrowClosed,
-           // color: lineColor,
-         },
-         markerStart: {
-           type: MarkerType.ArrowClosed,
-           // color: lineColor,
-         },
-         animated: false
-       },
-       wrapStyle: {}
-     },
+     }
+    //  {
+    //    key: 'bothArrow',
+    //    name: 'BothArrow',
+    //    lineComponent: undefined,
+    //    itemStyle: {
+    //      markerEnd: {
+    //        type: MarkerType.Arrow,
+    //        // color: lineColor,
+    //      },
+    //      markerStart: {
+    //        type: MarkerType.Arrow,
+    //        // color: lineColor,
+    //      },
+    //      animated: false
+    //    },
+    //    wrapStyle: {}
+    //  },
+    //  {
+    //    key: 'bothArrowClosed',
+    //    name: 'BothArrowClosed',
+    //    lineComponent: undefined,
+    //    itemStyle: {
+    //      markerEnd: {
+    //        type: MarkerType.ArrowClosed,
+    //        // color: lineColor,
+    //      },
+    //      markerStart: {
+    //        type: MarkerType.ArrowClosed,
+    //        // color: lineColor,
+    //      },
+    //      animated: false
+    //    },
+    //    wrapStyle: {}
+    //  },
      // {
      //   key: 'bothArrowClosed',
      //   name: 'BothArrowClosed',
@@ -548,7 +548,7 @@ const closeModal = () => {
            </div>
          </div>
          <div>
-           <div className="input-container">
+           {/* <div className="input-container">
                <label htmlFor="top-vertices">Line style:</label>
                <select defaultValue={lineStyle} onChange={(e) => {
                  setLineStyle(e.target.value)
@@ -559,7 +559,7 @@ const closeModal = () => {
                    })
                  }
                </select>
-             </div>
+             </div> */}
          </div>
          <div>
            <div className="input-container">
@@ -572,12 +572,12 @@ const closeModal = () => {
                })}
              </select>
            </div>
-           <div className="input-container">
+           {/* <div className="input-container">
              <label htmlFor="top-vertices">Line color:</label>
              <input type='color' value={lineColor} onChange={(e) => {
                setLineColor(e.target.value)
              }} />
-           </div>
+           </div> */}
          </div>
        </div>
      </div>
