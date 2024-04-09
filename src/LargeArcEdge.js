@@ -1,8 +1,6 @@
 import React from 'react';
 import { getBezierPath, getMarkerEnd } from 'react-flow-renderer';
 
-// useful source: https://reactflow.dev/examples/edges/custom-edges
-
 const LargeArcEdge = ({
   id,
   sourceX,
@@ -13,28 +11,18 @@ const LargeArcEdge = ({
   targetPosition,
   style = {},
   arrowHeadType,
-  markerEndId,
+  markerEndId, 
 }) => {
-  // Calculate control point for the curved edge
-  const curveFactor = 4; // Adjust this value for curvature
-  const controlPointX = sourceX + (targetX - sourceX) / curveFactor;
-  const controlPointY = sourceY; // Keep the y-coordinate same for both points
+  const midX = (sourceX + targetX) / 2;
+  const cp1Y = sourceY - 50 ; 
+  const cp2Y = targetY - 50 ; 
 
-  // Create custom curve path
-  const edgePath = `M${sourceX},${sourceY} C${controlPointX},${controlPointY} ${controlPointX},${controlPointY} ${targetX},${targetY}`;
-
-  // Get marker end
+  const edgePath = `M${sourceX},${sourceY} C${(sourceX + midX) / 2},${cp1Y} ${(targetX + midX) / 2},${cp2Y} ${targetX},${targetY}`;
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
-
-  // Edge style
-  const edgeStyle = {
-    ...style,
-    fill: 'none', // Ensure no fill
-  };
 
   return (
     <path
-      style={edgeStyle}
+      style={style}
       className="react-flow__edge-path"
       d={edgePath}
       markerEnd={markerEnd}
