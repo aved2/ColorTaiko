@@ -27,11 +27,9 @@ const LargeArcEdge = ({
 
   const edgePath = `M${sourceX},${sourceY} Q ${controlX},${controlY} ${targetX},${targetY}`;
 
-  // Define a larger arrow pointing to the right
-  // Adjust the size as needed by scaling the numbers
-// Define a traditional arrowhead pointing to the right
-  const arrowWidth = 25; // Width of the arrowhead
-  const arrowLength = 50; // Length of the arrowhead
+
+  const arrowWidth = 25;
+  const arrowLength = 50;
   const arrowPath = `M 0,0 L ${arrowLength},${arrowWidth / 2} L ${arrowLength},-${arrowWidth / 2} Z`;
 
   return (
