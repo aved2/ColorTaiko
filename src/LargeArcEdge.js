@@ -14,10 +14,10 @@ const LargeArcEdge = ({
   markerEndId, 
 }) => {
   const midX = (sourceX + targetX) / 2;
-  const cp1Y = sourceY - 50 ; 
-  const cp2Y = targetY - 50 ; 
+  const cp1Y = sourceY + 80 ; 
+  const cp2Y = targetY + 80 ; 
 
-  const edgePath = `M${sourceX},${sourceY} C${(sourceX + midX) / 2},${cp1Y} ${(targetX + midX) / 2},${cp2Y} ${targetX},${targetY}`;
+  const edgePath = `M${targetX},${targetY} C${(targetX + midX) / 2},${cp2Y} ${(sourceX + midX) / 2},${cp1Y} ${sourceX},${sourceY}`;
   const markerEnd = getMarkerEnd(arrowHeadType, markerEndId);
 
   return (
