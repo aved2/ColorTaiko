@@ -21,16 +21,16 @@ const LargeArcEdge = ({
   style = {},
 }) => {
   const controlX = (sourceX + targetX) / 2;
-  const controlY = Math.min(sourceY, targetY) + 50; 
+  const controlY = Math.min(sourceY, targetY) - 50; 
 
   const { midX, midY, angle } = calculateMidpointAndTangent(sourceX, sourceY, controlX, controlY, targetX, targetY);
 
   const edgePath = `M${sourceX},${sourceY} Q ${controlX},${controlY} ${targetX},${targetY}`;
 
 
-  const arrowWidth = 25;
-  const arrowLength = 50;
-  const arrowPath = `M 0,0 L ${arrowLength},${arrowWidth / 2} L ${arrowLength},-${arrowWidth / 2} Z`;
+  const arrowWidth = 25;  
+  const arrowLength = 40; 
+  const arrowPath = `M 0,0 L ${arrowLength},${arrowWidth / 2} L ${arrowLength - arrowWidth / 2},0 L ${arrowLength},${-arrowWidth / 2} Z`;
 
   return (
     <g>
