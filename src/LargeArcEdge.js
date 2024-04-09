@@ -21,7 +21,7 @@ const LargeArcEdge = ({
   style = {},
 }) => {
   const controlX = (sourceX + targetX) / 2;
-  const controlY = Math.min(sourceY, targetY) - 50; 
+  const controlY = Math.min(sourceY, targetY) + 50; 
 
   const { midX, midY, angle } = calculateMidpointAndTangent(sourceX, sourceY, controlX, controlY, targetX, targetY);
 
