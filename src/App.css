@@ -186,6 +186,13 @@ input[type=number] {
   z-index: 10;
 }
 
+
+.react-flow[data-testid="rf__wrapper"] {
+  overflow: visible !important;
+}
+
+
+
 .option-wrap {
   margin-bottom: 50px;
 }

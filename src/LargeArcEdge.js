@@ -19,14 +19,24 @@ const LargeArcEdge = ({
   targetX,
   targetY,
   style = {},
+  data
 }) => {
-  const controlX = (sourceX + targetX) / 2;
-  const controlY = Math.min(sourceY, targetY) - 50; 
+  const isTopLine = data.isTopLine;
+  console.log('the top line is ', isTopLine);
+  console.log('the pos is ',sourceX, sourceY, targetX, targetY);
 
+  const horizontalDistance = targetX - sourceX;
+  const verticalDistance = Math.abs(targetY - sourceY);
+  const controlX = (sourceX + targetX) / 2;
+  let controlY;
+  if (isTopLine) {
+    controlY = Math.min(sourceY, targetY) - Math.max(50, verticalDistance / 3);
+  } else {
+    controlY = Math.max(sourceY, targetY) + Math.max(50, verticalDistance / 3);
+  }
   const { midX, midY, angle } = calculateMidpointAndTangent(sourceX, sourceY, controlX, controlY, targetX, targetY);
 
   const edgePath = `M${sourceX},${sourceY} Q ${controlX},${controlY} ${targetX},${targetY}`;
-
 
   const arrowWidth = 25;  
   const arrowLength = 40; 

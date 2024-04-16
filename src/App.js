@@ -69,6 +69,8 @@ export default function App() {
  const currNodeA = useRef(null);
  const currNodeB = useRef(null);
  const round = useRef(0);
+ const isTop = useRef(false);
+
 
 
 
@@ -355,11 +357,15 @@ export default function App() {
     }
     
     if (round.current % 2 === 0) {    // even round, check if demand to draw horizontal lines
+      if (currNodeA.current > 100 && prevNodeA > 100) {
+        isTop.current = false;
+      }
       newCurvedEdgeA = {
         ...P,
         source: currNodeA.current,
         target: prevNodeA,
         type: 'largeArc', 
+        data: { isTopLine: isTop.current },
         // animated: true,
         style: {
           stroke: colorPairToUse[0], 
@@ -378,6 +384,7 @@ export default function App() {
             : undefined,
       };  
 
+      
 
       newCurvedEdgeB = {
         ...P,
@@ -385,6 +392,7 @@ export default function App() {
         target: prevNodeB,
         type: 'largeArc',
         // animated: true,
+        data: { isTopLine: !isTop.current },
         style: {
           stroke: colorPairToUse[0], 
           strokeWidth: lineWidth,
@@ -401,7 +409,14 @@ export default function App() {
             ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[0] }
             : undefined,
       };  
-    } else {
+
+      if (currNodeB.current === prevNodeB) {
+        newCurvedEdgeB = null;
+      }
+      if (currNodeA.current === prevNodeA) {
+        newCurvedEdgeA = null;
+      }
+    } else  {
       newCurvedEdgeA = null;
       newCurvedEdgeB = null;
     }
@@ -441,6 +456,7 @@ export default function App() {
       // )
       {
 
+
         const newEdge = {
           ...P,
           source,
@@ -463,7 +479,13 @@ export default function App() {
             ? { ...style?.itemStyle?.markerStart, color: colorPairToUse[1] }
             : undefined,
         };
-        console.log(newEdge);
+
+        console.log('newCurvedEdgeA before passing to ReactFlow:', newCurvedEdgeA, newCurvedEdgeB);
+
+
+
+
+    
       
         return [...eds, newEdge, ...(newCurvedEdgeA ? [newCurvedEdgeA, newCurvedEdgeB] : [])];
 
@@ -501,6 +523,8 @@ const closeModal = () => {
    })
    setEdges([...egs])
  };
+
+
  return (
    <div className={`App ${darkMode ? 'dark-mode' : ''}`} style={{ height: '100vh' }}>
      <div className='option-wrap'>
