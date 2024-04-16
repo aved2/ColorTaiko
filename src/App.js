@@ -480,14 +480,9 @@ export default function App() {
             : undefined,
         };
 
-        console.log('newCurvedEdgeA before passing to ReactFlow:', newCurvedEdgeA, newCurvedEdgeB);
 
-
-
-
-    
       
-        return [...eds, newEdge, ...(newCurvedEdgeA ? [newCurvedEdgeA, newCurvedEdgeB] : [])];
+        return [...eds, newEdge, newCurvedEdgeA ? newCurvedEdgeA: [], newCurvedEdgeB ? newCurvedEdgeB:[]  ];
 
       });
   },
