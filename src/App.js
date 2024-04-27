@@ -423,6 +423,65 @@ export default function App() {
 
   
 
+      // EQUIVALENCE CLASS CONDITIONS + attempt at blocking reverse horizontal
+
+      let merge_cell_with_others = false;
+      let equiv_class_color;
+  
+      if (newCurvedEdgeA && newCurvedEdgeB) {
+  
+        let a_source = newCurvedEdgeA.source;
+        let b_source = newCurvedEdgeB.source;
+  
+  
+        let a_target = newCurvedEdgeA.target;
+        let b_target = newCurvedEdgeB.target;
+        console.log(a_target);
+        console.log(a_source);
+        console.log(b_target);
+        console.log(b_source);
+        const reverse_exists_a = edges.some(edge => ( (edge.source === a_target && edge.target === a_source)  ));
+        const reverse_exists_b = edges.some(edge => ( (edge.source === b_target && edge.target === b_source)  ));
+        // currently doesn't work because of how the horizontal edges are formed I think?
+        if (reverse_exists_a || reverse_exists_b) {
+          setErrorMessage("Reverse horizontal edge already exists!");
+          previousColorRef.current = colorPairToUse; 
+          round.current-=1;
+          currNodeA.current = prevNodeA;
+          currNodeB.current = prevNodeB;
+          return; 
+        }
+
+        const edgeExistsA = edges.some(edge => (  (edge.source === a_source && edge.target === a_target) ||  (edge.source === a_target && edge.target === a_source)  ));
+        const edgeExistsB = edges.some(edge => (  (edge.source === b_source && edge.target === b_target) ||  (edge.source === b_target && edge.target === b_source)  ));
+  
+        if (edgeExistsA || edgeExistsB) {
+          // alert(newCurvedEdgeA.style.stroke);
+          // alert("found something!");
+  
+          if (edgeExistsA) {
+            edges.forEach(edge => {
+              if ((edge.source === a_source && edge.target === a_target) ||  (edge.source === a_target && edge.target === a_source)) {
+                equiv_class_color = edge.style.stroke;
+              }
+            });
+          } else {
+            edges.forEach(edge => {
+              if ((edge.source === b_source && edge.target === b_target) ||  (edge.source === b_target && edge.target === b_source)) {
+                equiv_class_color = edge.style.stroke;
+              }
+            });
+          }
+          // alert(equiv_class_color);
+          newCurvedEdgeA.style.stroke = equiv_class_color;
+          newCurvedEdgeB.style.stroke = equiv_class_color;
+  
+          merge_cell_with_others = true;
+  
+        }
+      }
+  
+
 
 
 
